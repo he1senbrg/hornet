@@ -6,7 +6,8 @@ i2c_mutex = Lock()
 
 # Import the PCA9685 module.
 import Adafruit_PCA9685
-pwm = Adafruit_PCA9685.PCA9685()
+# Explicitly specify I2C bus 1 (common on Raspberry Pi)
+pwm = Adafruit_PCA9685.PCA9685(busnum=1)
 # Configure min and max servo pulse lengths
 servo_min = 150  # Min pulse length out of 4096
 servo_max = 600  # Max pulse length out of 4096
