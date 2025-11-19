@@ -4,4 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "adafruit-pca9685>=1.0.1",
+    "rpi-gpio>=0.7.1",
+]
