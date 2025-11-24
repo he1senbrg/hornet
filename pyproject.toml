@@ -11,6 +11,7 @@ dependencies = [
     "imutils>=0.5.4",
     "opencv-python>=4.12.0.88",
     "pip>=25.3",
+    "pygame>=2.6.1",
     "rpi-gpio>=0.7.1",
     "setuptools>=80.9.0",
 ]

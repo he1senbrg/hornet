@@ -8,30 +8,6 @@ import threading
 import math
 import Adafruit_PCA9685
 
-import pygame
-
-# --- Xbox Controller Initialization ---
-pygame.init()
-pygame.joystick.init()
-joystick = None
-
-if pygame.joystick.get_count() > 0:
-    joystick = pygame.joystick.Joystick(0)
-    joystick.init()
-    print(f"[CONTROLLER] Detected: {joystick.get_name()}")
-else:
-    print("[CONTROLLER] No joystick detected")
-
-# Controller mapping constants (Xbox)
-AXIS_LEFT_X = 0
-AXIS_LEFT_Y = 1
-AXIS_RIGHT_X = 3
-AXIS_RIGHT_Y = 4
-BUTTON_A = 0
-BUTTON_B = 1
-BUTTON_X = 2
-BUTTON_Y = 3
-
 # --- Hardware Initialization ---
 try:
     # busnum=1 is standard for Raspberry Pi
@@ -548,56 +524,6 @@ def body_right(i):
     set_site(3, site_now[3][0] + i, KEEP, KEEP)
     wait_all_reach()
 
-def xbox_control_loop():
-    """Continuously read Xbox controller inputs and move robot"""
-    global gesture_in_progress
-
-    if joystick is None:
-        return  # No controller connected
-
-    deadzone = 0.2  # small tolerance for joystick neutral
-
-    while True:
-        pygame.event.pump()  # Process controller events
-
-        # --- Joystick Axes ---
-        lx = joystick.get_axis(AXIS_LEFT_X)
-        ly = joystick.get_axis(AXIS_LEFT_Y)
-        rx = joystick.get_axis(AXIS_RIGHT_X)
-        ry = joystick.get_axis(AXIS_RIGHT_Y)
-
-        # --- Movement Mapping ---
-        # Left stick Y: forward/back
-        if ly < -deadzone:
-            step_forward(1)
-        elif ly > deadzone:
-            step_back(1)
-
-        # Left stick X: lateral movement
-        if lx < -deadzone:
-            body_left(5)
-        elif lx > deadzone:
-            body_right(5)
-
-        # Right stick X: turning
-        if rx < -deadzone:
-            turn_left(1)
-        elif rx > deadzone:
-            turn_right(1)
-
-        # Buttons: gestures
-        if joystick.get_button(BUTTON_A):
-            hand_wave(1)
-        if joystick.get_button(BUTTON_B):
-            hand_shake(1)
-        if joystick.get_button(BUTTON_X):
-            sit()
-        if joystick.get_button(BUTTON_Y):
-            stand()
-
-        time.sleep(0.05)  # 20 Hz update
-
-
 def robot_setup():
     print("Robot initialization...")
     set_site(0, X_DEFAULT - X_OFFSET, Y_START + Y_STEP, Z_BOOT)
@@ -616,13 +542,6 @@ def robot_setup():
     
     print("Servo service started.")
     print("Robot initialization Complete.")
-
-    # Start Xbox controller thread
-    controller_thread = threading.Thread(target=xbox_control_loop)
-    controller_thread.daemon = True
-    controller_thread.start()
-    print("[CONTROLLER] Xbox control thread started")
-
 
 # Load pre-trained face encodings
 print("[INFO] loading encodings...")
