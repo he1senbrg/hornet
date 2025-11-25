@@ -198,20 +198,6 @@ def wait_all_reach():
     for i in range(4):
         wait_reach(i)
 
-def body_left(i):
-    set_site(0, site_now[0][0] + i, KEEP, KEEP)
-    set_site(1, site_now[1][0] + i, KEEP, KEEP)
-    set_site(2, site_now[2][0] - i, KEEP, KEEP)
-    set_site(3, site_now[3][0] - i, KEEP, KEEP)
-    wait_all_reach()
-
-def body_right(i):
-    set_site(0, site_now[0][0] - i, KEEP, KEEP)
-    set_site(1, site_now[1][0] - i, KEEP, KEEP)
-    set_site(2, site_now[2][0] + i, KEEP, KEEP)
-    set_site(3, site_now[3][0] + i, KEEP, KEEP)
-    wait_all_reach()
-
 # --- High Level Movement Functions ---
 
 def sit():
