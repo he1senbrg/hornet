@@ -564,13 +564,13 @@ if __name__ == "__main__":
         step_back(5)
         time.sleep(2)
         
-        # print("Turn left")
-        # turn_left(5)
-        # time.sleep(2)
+        print("Turn left")
+        turn_left(5)
+        time.sleep(2)
         
-        # print("Turn right")
-        # turn_right(5)
-        # time.sleep(2)
+        print("Turn right")
+        turn_right(5)
+        time.sleep(2)
         
         print("Hand wave")
         hand_wave(3)
